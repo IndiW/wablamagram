@@ -64,24 +64,66 @@ function App() {
     const [letterCount, setLetterCount] = useState(20)
     const [currentLetters, setCurrentLetters] = useState<string[]>([])
 
-    const getRandomValue = (arr: Array<string>) => {
-        const randomIndex = Math.floor(Math.random() * arr.length)
-        return arr[randomIndex]
+    function getRandomValuesBasedOnDay(seed: number, count: number): number[] {
+        const randomValues: number[] = []
+        let currentSeed = seed
+
+        for (let i = 0; i < count; i++) {
+            currentSeed = (currentSeed * 9301 + 49297) % 233280
+            const randomNumber = (currentSeed / 233280.0) * 27 // Scale to 0-26
+            randomValues.push(Math.floor(randomNumber))
+        }
+
+        return randomValues
     }
 
-    const generateLetterSet = () => {
-        let currentLetterSetLength = currentLetters.length
-        const newArray = currentLetters
-        while (currentLetterSetLength <= MAX_HAND_SIZE) {
-            newArray.push(getRandomValue(alphabetArray))
-            currentLetterSetLength += 1
+    function getRandomValuesFromArray<T>(array: T[], seed: number): T[] {
+        const randomIndices = getRandomValuesBasedOnDay(seed, 20)
+        const result: T[] = []
+
+        for (const index of randomIndices) {
+            result.push(array[index])
         }
-        setCurrentLetters(newArray)
+
+        return result
     }
+
+    // Example usage:
+    const myArray = [
+        'A',
+        'B',
+        'C',
+        'D',
+        'E',
+        'F',
+        'G',
+        'H',
+        'I',
+        'J',
+        'K',
+        'L',
+        'M',
+        'N',
+        'O',
+        'P',
+        'Q',
+        'R',
+        'S',
+        'T',
+        'U',
+        'V',
+        'W',
+        'X',
+        'Y',
+        'Z',
+    ] // Array of alphabet letters
+    const today = new Date()
+    const seed = today.getDate() // Use the day as the seed
+    const randomValues = getRandomValuesFromArray(myArray, seed)
 
     return (
         <>
-            <h1>{getRandomValue(alphabetArray)}</h1>
+            <h1>{randomValues}</h1>
             <h1>{`Remaining letters: ${letterCount}`}</h1>
         </>
     )
