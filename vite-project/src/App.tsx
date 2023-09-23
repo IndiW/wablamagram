@@ -123,6 +123,7 @@ function App() {
 
     return (
         <>
+            <input name='text input'></input>
             <h1>{randomValues}</h1>
             <h1>{`Remaining letters: ${letterCount}`}</h1>
         </>
