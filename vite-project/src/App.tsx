@@ -122,7 +122,7 @@ function App() {
     // }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const initialLetterDict = generateLetterDict(initialHand)
+        const initialLetterDict = generateLetterDict(currentLetters)
         const inputValue = event.target.value
 
         // Validate the input against the allowed characters
