@@ -142,10 +142,18 @@ function App() {
         setInputValue(sanitizedInput)
         setCurrentWord(sanitizedInput)
     }
+
+    const handleSubmit = () => {
+        const lettersUsed = currentWord.length
+        setLetterCount(letterCount - lettersUsed)
+        // setCurrentLetters([...randomValues].slice(lettersUsed, lettersUsed + 7))
+    }
+
     return (
         <>
             <input name='text input' value={inputValue} onChange={handleInputChange}></input>
             <h1>Current word: {currentWord}</h1>
+            <button onClick={handleSubmit}>Submit</button>
             <h1>{randomValues}</h1>
             <h1>Current Hand: {currentLetters}</h1>
             <h1>{`Remaining letters: ${letterCount}`}</h1>
